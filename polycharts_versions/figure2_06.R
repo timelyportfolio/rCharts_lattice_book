@@ -4,6 +4,7 @@
 #facet not really correct
 
 data(Oats, package = "MEMSS")
+data(barley,package="lattice")
 
 
 chart2_6 <- rPlot(variety ~ yield | site,

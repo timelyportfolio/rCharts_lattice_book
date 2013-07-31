@@ -33,7 +33,7 @@ for ( i in 1:length(files) ) {
   eval(
     parse(
       text = 
-        tetxpathSApply(
+        xpathSApply(
           parsed,
           paste0('//div[@id="CODE.0', chapter,'"]/text()'),
           xmlValue
@@ -46,3 +46,37 @@ for ( i in 1:length(files) ) {
   )$show(T)#$print()
   
 }
+
+
+
+
+#now run tests with lattice examples
+
+#get all code Listings
+codeListing <- xpathSApply(
+  parsed,
+  '//div[@class="codeListing"]/text() | 
+  //div[@class="codeListingHidden"]/text()',
+  xmlValue)
+
+for (i in 1:length(codeListing)) {
+  #ERROR HANDLING
+  possibleError <- tryCatch(
+    eval(
+      parse(
+        text = codeListing[i]
+      ),
+      environment()
+    ),
+    error=function(e) e
+  )
+  print(possibleError)
+  
+  if(inherits(possibleError, "error")) next
+
+  if(length(grid.ls(flatten=FALSE,print=FALSE)) > 1){
+      grid.export(paste0("example",i,".svg"))      
+      dev.off()
+    }
+  }  #end for
+  
