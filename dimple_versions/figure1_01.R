@@ -73,9 +73,10 @@ d1_1$params$facet <- modifyList(
   d1_1$params$facet,
   list(nrow = 2, ncol=3)
 )
+d1_1$addAssets(
+  "http://timelyportfolio.github.io/rCharts_dimple_systematic/libraries/widgets/dimple/js/d3-grid.js"
+)
 d1_1
-
-
 
 chart1_1 <- rPlot(
   x = "bin(gcsescore,0.5)",
