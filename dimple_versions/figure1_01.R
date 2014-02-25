@@ -15,7 +15,7 @@ lattice_plot <- histogram(~ gcsescore | factor(score), data = Chem97)
 
 #get bins like a histogram for use with dplyr
 bins <- pretty(Chem97$gcsescore,n=20)
-
+#one solution with ddply and dplyr
 plotdata <- ddply(
   Chem97 %.%
     mutate(gcsescore = bins[findInterval(
@@ -29,7 +29,7 @@ plotdata <- ddply(
   ,count = sum(count,na.rm=F),
   .drop = F
 )
-
+#another solution with lapply and dplyr
 plotdata <- do.call(rbind,lapply(
   sort(unique(Chem97$score)),
   function(x){
@@ -47,7 +47,7 @@ plotdata <- do.call(rbind,lapply(
 ))
 
 
-
+#make the plot
 d1_1 <- dPlot(
   count ~ gcsescore,
   data = plotdata,
@@ -57,9 +57,6 @@ d1_1 <- dPlot(
   width = 800
 )
 d1_1$params$facet = list( x = "score" )
-#d1_1$xAxis(
-#  type = "addMeasureAxis"
-#)
 d1_1$yAxis(
   overrideMin = 0,
   overrideMax = max(plotdata$count),
@@ -78,6 +75,8 @@ d1_1$addAssets(
 )
 d1_1
 
+
+#polycharts version
 chart1_1 <- rPlot(
   x = "bin(gcsescore,0.5)",
   y = "count(student)",
