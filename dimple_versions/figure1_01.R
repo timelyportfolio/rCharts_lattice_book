@@ -11,7 +11,8 @@ data(Chem97, package = "mlmRev")
 #not necessary but include since in example
 xtabs( ~ score, data = Chem97)
 
-lattice_plot <- histogram(~ gcsescore | factor(score), data = Chem97)
+#lattice plot
+histogram(~ gcsescore | factor(score), data = Chem97)
 
 #get bins like a histogram for use with dplyr
 bins <- pretty(Chem97$gcsescore,n=20)

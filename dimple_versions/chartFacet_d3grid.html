@@ -214,15 +214,23 @@ var ypos = d3.extent(subCharts,function(d){return d.y});
 subCharts.filter(function(d){
   return d.x!=xpos[0];
 }).forEach(function(d){
-  d.axes[1].shapes.remove();
-  d.axes[1].titleShape.remove();
+  d.axes.forEach(function(axis){
+    if (axis.position === "y"){
+      axis.shapes.remove();
+      axis.titleShape.remove();
+    }
+  })
 });
 //now x for those not in row 1
 subCharts.filter(function(d){
   return d.y!=ypos[1];
 }).forEach(function(d){
-  d.axes[0].shapes.remove();
-  d.axes[0].titleShape.remove();
+  d.axes.forEach(function(axis){
+    if (axis.position === "x"){
+      axis.shapes.remove();
+      axis.titleShape.remove();
+    }
+  })
 });
 
 /*
